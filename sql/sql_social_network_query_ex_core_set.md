@@ -47,3 +47,15 @@ and not exists (select id from highschooler where id in (
 group by h1.name
 order by h1.grade, h1.name
 ```
+
+Find the name and grade of all students who are liked by more than one other student.
+
+```sql
+select name, grade from highschooler
+where id in (
+select id2
+from likes
+group by id2
+having count(id1) > 1
+)
+```
