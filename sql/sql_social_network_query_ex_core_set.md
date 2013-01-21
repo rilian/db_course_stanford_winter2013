@@ -32,6 +32,17 @@ select n2, g2, n1, g1 from
   order by  mult asc , h1.name < h2.name desc
 ) as t
 group by mult
-
 ```
 
+Find names and grades of students who only have friends in the same grade. Return the result sorted by grade, then by name within each grade.
+
+```sql
+select  h1.name, h1.grade
+from highschooler as h1
+join friend as f on f.id1=h1.id
+join highschooler as h2 on h2.id = f.id2
+where h1.grade=h2.grade
+and not exists (select id from highschooler where id in (select id2 from friend where id1=h1.id) and grade <> h1.grade )
+group by h1.name
+order by h1.grade, h1.name
+```
