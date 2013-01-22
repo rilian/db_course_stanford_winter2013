@@ -29,9 +29,11 @@ where mID in (
 )
 ```
 
-*
+Remove all ratings where the movie's year is before 1970 or after 2000, and the rating is fewer than 4 stars.
 
 ```sql
-
+delete from rating
+where mID in (select mID from movie where year <1970 or year > 2000)
+and stars < 4
 ```
 
