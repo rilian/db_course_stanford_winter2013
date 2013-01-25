@@ -22,20 +22,24 @@ group by r.mid))
 
 Some directors directed more than one movie. For all such directors, return the titles of all movies directed by them, along with the director name. Sort by director name, then movie title. (As an extra challenge, try writing the query both with and without COUNT.)
 ```sql
-*
+select title, director from movie where director in (
+select director from movie group by director having count(mid) > 1)
+order by director, title
 ```
 
 Find the movie(s) with the highest average rating. Return the movie title(s) and average rating. (Hint: This query is more difficult to write in SQLite than other systems; you might think of it as finding the highest average rating and then choosing the movie(s) with that average rating.)
 ```sql
-*
+select title, avg(stars) av2 from rating r join movie m on r.mid=m.mid group by r.mid
+having av2=(select avg(stars) av1 from rating group by mid order by av1 desc limit 1)
 ```
 
 Find the movie(s) with the lowest average rating. Return the movie title(s) and average rating. (Hint: This query may be more difficult to write in SQLite than other systems; you might think of it as finding the highest average rating and then choosing the movie(s) with that average rating.)
 ```sql
-*
+select title, avg(stars) av2 from rating r join movie m on r.mid=m.mid group by r.mid
+having av2=(select avg(stars) av1 from rating group by mid order by av1 asc limit 1)
 ```
 
 For each director, return the director's name together with the title(s) of the movie(s) they directed that received the highest rating among all of their movies, and the value of that rating. Ignore movies whose director is NULL.
 ```sql
-*
+--
 ```
