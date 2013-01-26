@@ -14,3 +14,10 @@ Return titles of courses with enrollment greater than 500.
 ```
 doc("courses.xml")//Course[@Enrollment>500]/Title
 ```
+
+Return titles of departments that have some course that takes "CS106B" as a prerequisite.
+```
+doc("courses.xml")//Department/Course/Prerequisites[Prereq="CS106B"]/../../Title
+```
+
+
