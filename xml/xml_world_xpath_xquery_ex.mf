@@ -1,0 +1,26 @@
+# XML World-Countries XPath and XQuery Exercises (core set)
+
+Return the area of Mongolia.
+```
+doc("countries.xml")//country[@name="Mongolia"]/data(@area)
+```
+
+Return the names of all cities that have the same name as the country in which they are located.
+```
+for $b in doc("countries.xml")//country for $c in $b/city where $c/name = $b/@name return $c/name
+```
+
+Return the average population of Russian-speaking countries.
+```
+avg(doc("countries.xml")//country[language="Russian"]/data(@population))
+```
+
+Return the names of all countries where over 50% of the population speaks German.
+```
+--
+```
+
+Return the name of the country with the highest population.
+```
+
+```
