@@ -34,10 +34,14 @@ Write an instead-of trigger that enables deletions from view HighlyRated.
 
 Policy: Deletions from view HighlyRated should delete all ratings for the corresponding movie that have stars > 3.
 ```sql
---
+create trigger del
+instead of delete on HighlyRated
+for each row begin delete from Rating where mid=old.mid and stars > 3; end;
 ```
 
+Write an instead-of trigger that enables deletions from view HighlyRated.
 
+Policy: Deletions from view HighlyRated should update all ratings for the corresponding movie that have stars > 3 so they have stars = 3.
 ```sql
 --
 ```
