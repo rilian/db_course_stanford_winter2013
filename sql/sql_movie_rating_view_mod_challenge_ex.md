@@ -16,7 +16,10 @@ Write an instead-of trigger that enables insertions into view HighlyRated.
 
 Policy: An insertion should be accepted only when the (mID,title) pair already exists in the Movie table. (Otherwise, do nothing.) Insertions into view HighlyRated should add a new rating for the inserted movie with rID = 201, stars = 5, and NULL ratingDate.
 ```sql
---
+create trigger ins
+INSTEAD OF INSERT on HighlyRated
+for each row when exists (select 1 from Movie where mid=new.mid and title=new.title)
+begin insert into rating(rid,mid,stars) values(201,new.mid,5); end;
 ```
 
 Write an instead-of trigger that enables insertions into view NoRating.
