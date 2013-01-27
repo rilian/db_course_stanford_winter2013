@@ -2,7 +2,14 @@
 
 Finally, write a single instead-of trigger that combines all three of the previous triggers to enable simultaneous updates to attributes mID, title, and/or stars in view LateRating. Combine the view-update policies of the three previous problems, with the exception that mID may now be updated. Make sure the ratingDate attribute of view LateRating has not also been updated -- if it has been updated, don't make any changes.
 ```sql
---
+create trigger upd_all
+INSTEAD OF UPDATE of mid,title,stars on LateRating
+for each row when new.ratingDate = old.ratingDate begin
+update Movie set title=new.title where mid=old.mid;
+update Rating set stars=new.stars where ratingDate=old.ratingDate and mid=old.mid;
+update Movie set mid=new.mid where mid=old.mid;
+update Rating set mid=new.mid where mid=old.mid;
+end;
 ```
 
 Write an instead-of trigger that enables insertions into view HighlyRated.
