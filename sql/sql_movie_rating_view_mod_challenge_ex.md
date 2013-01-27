@@ -1,0 +1,20 @@
+# SQL Movie-Rating View Modification Exercises (challenge-level)
+
+Finally, write a single instead-of trigger that combines all three of the previous triggers to enable simultaneous updates to attributes mID, title, and/or stars in view LateRating. Combine the view-update policies of the three previous problems, with the exception that mID may now be updated. Make sure the ratingDate attribute of view LateRating has not also been updated -- if it has been updated, don't make any changes.
+```sql
+--
+```
+
+Write an instead-of trigger that enables insertions into view HighlyRated.
+
+Policy: An insertion should be accepted only when the (mID,title) pair already exists in the Movie table. (Otherwise, do nothing.) Insertions into view HighlyRated should add a new rating for the inserted movie with rID = 201, stars = 5, and NULL ratingDate.
+```sql
+--
+```
+
+Write an instead-of trigger that enables insertions into view NoRating.
+
+Policy: An insertion should be accepted only when the (mID,title) pair already exists in the Movie table. (Otherwise, do nothing.) Insertions into view NoRating should delete all ratings for the corresponding movie.
+```sql
+--
+```
