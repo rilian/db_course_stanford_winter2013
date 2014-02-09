@@ -41,5 +41,10 @@ having av2=(select avg(stars) av1 from rating group by mid order by av1 asc limi
 
 For each director, return the director's name together with the title(s) of the movie(s) they directed that received the highest rating among all of their movies, and the value of that rating. Ignore movies whose director is NULL.
 ```sql
---
+select director, title, stars
+from movie m, rating r
+where m.mid = r.mid and director is not null
+group by director 
+order by stars desc
 ```
+
