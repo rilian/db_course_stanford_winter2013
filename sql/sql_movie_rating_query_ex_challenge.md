@@ -44,7 +44,7 @@ Find the movie(s) with the lowest average rating. Return the movie title(s) and 
 ```sql
 select m.title, avg(r.stars) as strs from rating r
 join movie m on m.mid = r.mid group by r.mid
-having strs = (select max(s.stars) as stars from (select mid, avg(stars) as stars from rating
+having strs = (select min(s.stars) as stars from (select mid, avg(stars) as stars from rating
 group by mid) as s)
 ```
 
