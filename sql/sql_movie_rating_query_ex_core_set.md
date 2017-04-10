@@ -40,8 +40,7 @@ For all cases where the same reviewer rated the same movie twice and gave it a h
 
 ```sql
 select Reviewer.name, Movie.title
-from Reviewer, Movie, (select R1.rID, R1.mID from Rating R1, Rating R2 
-									where R1.rID=R2.rID and R1.mID=R2.mID and R2.ratingDate>R1.ratingDate and R2.stars>R1.stars) as T
+from Reviewer, Movie, (select R1.rID, R1.mID from Rating R1, Rating R2 where R1.rID=R2.rID and R1.mID=R2.mID and R2.ratingDate>R1.ratingDate and R2.stars>R1.stars) as T
 where Reviewer.rID=T.rID and Movie.mID=T.mID
 ```
 
