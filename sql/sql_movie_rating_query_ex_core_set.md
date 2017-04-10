@@ -39,12 +39,10 @@ order by Reviewer.name, Movie.title, stars
 For all cases where the same reviewer rated the same movie twice and gave it a higher rating the second time, return the reviewer's name and the title of the movie.
 
 ```sql
-select name, title FROM
-(select name, count(Rating.rID) as cnt, Rating.mID, title, stars,ratingDate from Rating
-join Reviewer on Rating.rid = Reviewer.rid
-join Movie on Movie.mID = Rating.mID
- group by Rating.rID, Rating.mID) as T
-WHERE t.cnt > 1 limit 1
+select Reviewer.name, Movie.title
+from Reviewer, Movie, (select R1.rID, R1.mID from Rating R1, Rating R2 
+									where R1.rID=R2.rID and R1.mID=R2.mID and R2.ratingDate>R1.ratingDate and R2.stars>R1.stars) as T
+where Reviewer.rID=T.rID and Movie.mID=T.mID
 ```
 
 For each movie that has at least one rating, find the highest number of stars that movie received. Return the movie title and number of stars. Sort by movie title.
