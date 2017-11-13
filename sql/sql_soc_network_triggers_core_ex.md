@@ -28,3 +28,18 @@ after update of grade on Highschooler
 for each row when new.grade>12
 begin delete from Highschooler where id=new.id; end;
 ```
+Write a trigger that automatically deletes students when they graduate, i.e., when their grade is updated to exceed 12 (same as Question 3). In addition, write a trigger so when a student is moved ahead one grade, then so are all of his or her friends.
+```create trigger g1
+after update of grade on Highschooler
+for each row when new.grade>12
+begin
+  delete from Highschooler where id=new.id;
+ end;
+|
+create trigger g2
+after update on Highschooler
+for each row
+begin
+  update Highschooler set grade=grade+1 where ID in (Select ID2 from Friend where ID1=new.ID);
+ end;
+ ```
