@@ -53,22 +53,26 @@ group by Movie.mID
 order by title
 ```
 
-List movie titles and average ratings, from highest-rated to lowest-rated. If two or more movies have the same average rating, list them in alphabetical order.
+For each movie, return the title and the 'rating spread', that is, the difference between highest and lowest ratings given to that movie. Sort by rating spread from highest to lowest, then by movie title. 
 
 ```sql
-select title, AVG(stars) as avst from Rating
-join Movie on Movie.mID=Rating.mID
-group by Movie.mID
-order by avst DESC, title
+select * 
+from (select title, max(stars)-min(stars) value
+        from rating natural join movie 
+        group by title) 
+order by value desc
 ```
 
-Find the names of all reviewers who have contributed three or more ratings.
+ Find the difference between the average rating of movies released before 1980 and the average rating of movies released after 1980. (Make sure to calculate the average rating for each movie, then the average of those averages for movies before 1980 and movies after. Don't just calculate the overall average rating before and after 1980.) 
 
 ```sql
-select name from Reviewer where rID in (
-select rID from (
-select rID, count(mID) as cnt
-from rating
-group by rID
-having cnt > 2) as t)
+select abs(avg(a)-(select avg(b) 
+                    from (select avg(stars) b 
+                    from rating natural join movie 
+                    where year <1980 
+                    group by title)))
+from (select avg(stars) a
+        from rating natural join movie 
+        where year >1980 
+        group by title) 
 ```
